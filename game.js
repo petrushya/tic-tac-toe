@@ -29,7 +29,7 @@ const roundCounter = makeCounter();
 function gameController(playerOneName = 'player one', playerTwoName = 'player two') {
 
   const getBoard = gameBoard.getBoard();
-  console.log(getBoard);
+  console.log(getBoard.map(cell => cell.getMark()));
 
   const players = [
     { name: playerOneName, mark: '🗙' },
@@ -47,7 +47,7 @@ function gameController(playerOneName = 'player one', playerTwoName = 'player tw
 
       roundCounter.increment();
       console.log(`Next mark ${activePlayer().mark}`);
-      console.log(getBoard);
+      console.log(getBoard.map(cell => cell.getMark()));
     };
 
   };
