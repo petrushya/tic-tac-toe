@@ -22,7 +22,7 @@
 }
 .players{
   display: flex;
-  inline-size: 24rem;
+  inline-size: 100%;
   margin: 0 auto;
 }
 .player1, .player2, .gameInfo{
@@ -56,11 +56,28 @@ hr{
   inline-size: 100%;
   margin: 0.25rem 0;
 }
+.mark{
+  font-size: 1.5rem;
+}
 .board{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
   inline-size: 24rem;
   block-size: 24rem;
   background-color: #f5f5f5;
   margin: 1rem auto;
+}
+.cell{
+  display: flex;
+  inline-size: calc((24rem - 6px) / 3);
+  block-size: calc((24rem - 6px) / 3);
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+  background-color: #f5f5f5;
+  cursor: pointer;
+  caret-color: transparent;
 }
 .control{
   margin: 0 auto;
