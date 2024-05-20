@@ -38,7 +38,7 @@ const players = [
 player1.textContent = players[0].name;
 player2.textContent = players[1].name;
 
-function gameController(playerOneName, playerTwoName) {
+function gameController() {
 
   const getBoard = gameBoard.getBoard();
   console.log(getBoard.map(cell => cell.getMark()));
