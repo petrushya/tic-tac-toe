@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="game.js" defer></script>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="players">
+      <div class="player1">
+        <p><span class="player">player1</span><br>mark: <span class="mark">&#x1f5d9;</span></p><hr>
+        <p class="score">0</p>
+      </div>
+      <div class="gameInfo">
+        <p class="message">NEXT MARK<br><span class="bigMark">&#x1F5D9;</span></p><hr>
+        <p>:</p>
+      </div>
+      <div class="player2">
+        <p><span class="player">player2</span><br>mark: <span class="mark">&#x1f787;</span></p><hr>
+        <p class="score">0</p>
+      </div>
+    </div>
+    <div class="board"></div>
+    <div class="control">
+      <button class="nextRound" name="nextRound" type="button">Next Round</button>
+      <button class="changeName" name="changeName" type="button">Change Names</button>
+      <button class="play" name="play" type="button">New Game</button>
+    </div>
+  </div>
+</body>
+</html>
