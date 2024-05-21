@@ -1,34 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tic Tac Toe</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="game.js" defer></script>
-</head>
-<body>
-  <div class="wrapper">
-    <div class="players">
-      <div class="player1">
-        <p><span class="player">player1</span><br>mark: <span class="mark">&#x1f5d9;</span></p><hr>
-        <p class="score">0</p>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Tic Tac Toe</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="game.js" defer></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="getGameRounds">
+        <form class="gameCounter">
+          <label for="gameCounter">Choose a maximum game rounds:</label>
+          <p>
+          <input type="range" name="gameCounter" id="gameCounter" min="1" max="10" step="1" value="3">
+          <output class="gameCounter-output" for="gameCounter"></output>
+          </p>
+        </form>
       </div>
-      <div class="gameInfo">
-        <p class="message">NEXT MARK<br><span class="bigMark">&#x1F5D9;</span></p><hr>
-        <p>:</p>
-      </div>
-      <div class="player2">
-        <p><span class="player">player2</span><br>mark: <span class="mark">&#x1f787;</span></p><hr>
-        <p class="score">0</p>
-      </div>
-    </div>
-    <div class="board"></div>
-    <div class="control">
-      <button class="nextRound" name="nextRound" type="button">Next Round</button>
-      <button class="changeName" name="changeName" type="button">Change Names</button>
-      <button class="play" name="play" type="button">New Game</button>
-    </div>
-  </div>
-</body>
+      <div class="players">
+        <div class="player1">
+          <p><span class="player">player1</span><br>mark: <span class="mark">&#x1F5D9;</span></p><hr>
+          <p class="score">0</p>
+        </div>
+        <div class="gameInfo">
+          <p class="message">Next mark<br><span class="bigMark">&#x1F5D9;</span></p><hr>
+          <p>:</p>
+        </div>
+        <div class="player2">
+          <p><span class="player">player2</span><br>mark: <span class="mark">&#x1F787;</span></p><hr>
+          <p class="score">0</p>
+        </div>
+     </div>
+     <div class="board"></div>
+     <div class="control">
+       <button class="nextRound" type="button" name="nextRound">Next round</button>
+       <button class="changeName" type="button" name="changeName">Change Name</button>
+       <button class="play" type="button" name="play">New Game</button>
+     </div>
+   </div>
+  </body>
 </html>
