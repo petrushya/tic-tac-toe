@@ -57,7 +57,8 @@ playGame.addEventListener('click', () => {
   gameInfo.style.display = 'none';
   round.style.visibility = 'visible';
   [roundCounter, playerOneCounter, playerTwoCounter, gameCounter].forEach(element => element.resetCounter());
-  round.textContent = `Round ${gameCounter.getValue() + 1} of ${maxCount.value}`;
+  gameCounter.getValue() + 1 === +maxCount.value ? round.textContent = 'Last Round' :
+    round.textContent = `Round ${gameCounter.getValue() + 1} of ${maxCount.value}`;
   gameController();
 });
 nextRound.addEventListener('click', () => {
