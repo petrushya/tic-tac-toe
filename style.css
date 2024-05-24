@@ -1,10 +1,9 @@
-
 .wrapper{
   inline-size: 30rem;
   margin: 2rem auto 0;
   font-family: monospace;
   font-size: 1.125rem;
-  font-weight: 600;
+  font-weight: bold;
   word-spacing: -60%;
   display: flex;
   flex-direction: column;
@@ -17,7 +16,7 @@
   overflow: hidden;
 }
 .player1, .player2, .roundInfo{
-  flex: 1 0 33.33%;
+  inline-size: 10rem;
   block-size: 9rem;
   display: flex;
   flex-direction: column;
@@ -51,7 +50,7 @@ hr{
 .board{
   display: flex;
   flex-wrap: wrap;
-  gap: 3px;
+  gap: 0.2rem;
   inline-size: 24rem;
   block-size: 24rem;
   background-color: #000;
@@ -59,8 +58,8 @@ hr{
 }
 .cell{
   display: flex;
-  inline-size: calc((24rem - 6px) / 3);
-  block-size: calc((24rem - 6px) / 3);
+  inline-size: calc(23.6rem / 3);
+  block-size: calc(23.6rem / 3);
   justify-content: center;
   align-items: center;
   font-size: 5rem;
@@ -81,7 +80,6 @@ hr{
   justify-content: center;
   row-gap: 1rem;
   margin: 0 auto;
-  font-weight: 800;
   background-color: rgba(255, 255, 255, 0.95);
 }
 .gameInfo > p:first-child{
@@ -103,7 +101,7 @@ hr{
   font-size: 1.5rem;
 }
 .round{
-  margin: 0 0 0.5rem;
+  margin: 0.5rem 0 0;
   text-align: center;
   visibility: hidden;
 }
@@ -113,9 +111,60 @@ hr{
 }
 button{
   font-size: 1.25rem;
-  font-weight: 800;
+  font-weight: bold;
   font-family: monospace;
   word-spacing: -50%;
   padding: 0.25rem 0.5rem;
   margin: 0 0.25rem;
+}
+#namedDialog div{
+  text-align: center;
+}
+#namedDialog input{
+  font-size: 1rem;
+}
+#namedDialog::backdrop{
+  background-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.95) 0, rgba(0, 0, 0, 0.75) 30%, rgba(0, 0, 0 , 0.25) 100%);
+  opacity: 1;
+}
+dialog{
+  animation: fade-out 250ms ease-out;
+}
+dialog[open]{
+  animation: fade-in 350ms ease-out;
+}
+dialog[open]::backdrop {
+  animation: backdrop-fade-in 500ms ease-out;
+}
+@keyframes fade-in{
+  0% {
+    opacity: 0;
+    transform: scaleY(0);
+    display: none;
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1);
+    display: block;
+  }
+}
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: scaleY(1);
+    display: block;
+  }
+  100% {
+    opacity: 0;
+    transform: scaleY(0);
+    display: none;
+  }
+}
+@keyframes backdrop-fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

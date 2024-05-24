@@ -11,7 +11,7 @@
     <div class="wrapper">
       <div class="players">
         <div class="player1">
-          <p><span class="player">player1</span><br>mark: <span class="mark">&#x1F5D9;</span></p>
+          <p><span class="player">PLAYER ONE</span><br>mark: <span class="mark">&#x1F5D9;</span></p>
           <p class="score">0</p>
         </div>
         <div class="roundInfo">
@@ -19,11 +19,12 @@
           <p>:</p>
         </div>
         <div class="player2">
-          <p><span class="player">player2</span><br>mark: <span class="mark">&#x1F787;</span></p>
+          <p><span class="player">PLAYER TWO</span><br>mark: <span class="mark">&#x1F787;</span></p>
           <p class="score">0</p>
         </div>
       </div>
       <hr>
+      <p class="round">Round 1</p>
       <div class="board">
         <div class= "gameInfo">
           <p><u>Tic Tac Toe</u><br>WANT TO PLAY?</p>
@@ -36,15 +37,29 @@
                 <output class="gameCounterOutput" for="gameCounter"></output>
               </p>
             </form>
-         </div>
-         <p>
-           <button class="changeName" type="button" name="changeName">CHANGE NAMES</button>
-           <button class="play" type="button" name="play">PLAY GAME</button>
-         </p>
-       </div>
-     </div>
-     <p class="round">Round 1</p>
-     <button class="nextRound" type="button" name="nextRound">PLAY ROUND</button>
-   </div>
+          </div>
+          <div>
+            <dialog id="namedDialog">
+              <form method="get">
+                <p>
+                  <label for="playerOneNamed">Player One Name: </label>
+                  <input type="text" id="playerOneNamed" name="playerOneNamed" autofocus>
+                </p><p>
+                  <label for="playerTwoNamed">Player Two Name: </label>
+                  <input type="text" id="playerTwoNamed" name="playerTwoNamed">
+                </p>
+                <div>
+                  <button type="submit" id="confirmNames">CONFIRM</button>
+                  <button type="cancel" formmethod="dialog">CANCEL</button>
+                </div>
+              </form>
+            </dialog>
+            <button class="changeName" type="button" name="changeName">CHANGE NAMES</button>
+            <button class="play" type="button" name="play">PLAY GAME</button>
+          </div>
+        </div>
+      </div>
+      <button class="nextRound" type="button" name="nextRound">NEXT ROUND</button>
+    </div>
   </body>
 </html>
