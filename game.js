@@ -28,7 +28,6 @@ const roundCounter = makeCounter();
 const playerOneCounter = makeCounter();
 const playerTwoCounter = makeCounter();
 const gameCounter = makeCounter();
-const gameBoard = createBoard('.board').getBoard();
 let players = getPlayers(playerOne.textContent, playerTwo.textContent).players;
 
 changeName.addEventListener("click", () => {
@@ -68,6 +67,8 @@ nextRound.addEventListener('click', () => {
   nextRound.style.visibility = 'hidden';
   gameController();
 });
+
+createBoard('.board').getBoard();
 
 function gameController() {
   const message = document.querySelector('.message');
