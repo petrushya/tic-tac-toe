@@ -2,8 +2,8 @@ const playerOne = document.querySelector('.player1 .player');
 const playerTwo = document.querySelector('.player2 .player');
 const playerOneNamed = document.querySelector('#playerOneNamed');
 const playerTwoNamed = document.querySelector('#playerTwoNamed');
-const scoreOnePlayer = document.querySelector('.player1 .score');
-const scoreTwoPlayer = document.querySelector('.player2 .score');
+const playerOneScore = document.querySelector('.player1 .score');
+const playerTwoScore = document.querySelector('.player2 .score');
 const maxCount = document.querySelector('#gameCounter');
 const output = document.querySelector('.gameCounterOutput');
 const round = document.querySelector('.round');
@@ -77,8 +77,8 @@ function gameController() {
 
   const activePlayer = () => players[roundCounter.getValue() % 2];
 
-  scoreOnePlayer.textContent = playerOneCounter.getValue();
-  scoreTwoPlayer.textContent = playerTwoCounter.getValue();
+  playerOneScore.textContent = playerOneCounter.getValue();
+  playerTwoScore.textContent = playerTwoCounter.getValue();
   message.innerHTML = 'Next mark<br><span class="mark">&#x1F5D9;</span>';
   document.querySelectorAll(`.cell`).forEach(cell => {
     cell.textContent = '';
@@ -104,8 +104,8 @@ function gameController() {
         message.textContent = `SCORE`;
         gameCounter.increment();
         activePlayer().counter.increment();
-        scoreOnePlayer.textContent = playerOneCounter.getValue();
-        scoreTwoPlayer.textContent = playerTwoCounter.getValue();
+        playerOneScore.textContent = playerOneCounter.getValue();
+        playerTwoScore.textContent = playerTwoCounter.getValue();
         round.textContent = `${activePlayer().name} won the round!`;
         nextRound.style.visibility = 'visible';
         boardDiv.removeEventListener("click", clickHandlerBoard);
