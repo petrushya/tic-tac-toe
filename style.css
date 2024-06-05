@@ -1,3 +1,4 @@
+
 .wrapper{
   inline-size: 30rem;
   margin: 2rem auto 0;
@@ -26,7 +27,7 @@
 .player1 p, .player2 p, .roundInfo p{
   margin: 0;
 }
-.player1 p ~ p, .player2 p ~ p, .roundInfo p ~ p, .player, .mark {
+.player1 p ~ p, .player2 p ~ p, .roundInfo p ~ p, .player, .mark{
   font-size: 1.5rem;
  }
 .player2{
@@ -50,7 +51,7 @@ hr{
 .board{
   display: flex;
   flex-wrap: wrap;
-  gap: 0.2rem;
+  gap: 3px;
   inline-size: 24rem;
   block-size: 24rem;
   background-color: #000;
@@ -58,28 +59,31 @@ hr{
 }
 .cell{
   display: flex;
-  inline-size: calc(23.6rem / 3);
-  block-size: calc(23.6rem / 3);
+  inline-size: calc((24rem - 6px) / 3);
+  block-size: calc((24rem - 6px) / 3);
   justify-content: center;
   align-items: center;
-  font-size: 5rem;
   background-color: #f5f5f5;
   cursor: pointer;
+}
+.cell:nth-child(n){
+  font-size: 5rem;
+  align-self: center;
 }
 .cell.color{
   background-color: #a0a0a0;
   color: #fff;
 }
 .gameInfo{
-  inline-size: 24rem;
-  block-size: 24rem;
+  inline-size: 30rem;
+  min-block-size: 25rem;
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   row-gap: 1rem;
-  margin: 0 auto;
+  margin-top: 12.5rem;
   background-color: rgba(255, 255, 255, 0.95);
 }
 .gameInfo > p:first-child{
