@@ -167,45 +167,26 @@ function makeCounter(){
 function findWinArr(y, x, gameBoard, player){
   let winCondition = 0;
   const winArr = [[],[],[]];
-    if(gameBoard[y+1] && gameBoard[y+1][x+1] && gameBoard[y+2] && gameBoard[y+2][x+2] &&
-    gameBoard[y+1][x+1].getValue()===player.mark && gameBoard[y+2][x+2].getValue()===player.mark &&
-    gameBoard[y][x].getValue()===player.mark){
-      winArr[y].push(x); winArr[y+1].push(x+1); winArr[y+2].push(x+2);
-    }else if(gameBoard[y-1] && gameBoard[y-1][x-1] && gameBoard[y+1] && gameBoard[y+1][x+1] &&
-    gameBoard[y-1][x-1].getValue()===player.mark && gameBoard[y+1][x+1].getValue()===player.mark &&
-    gameBoard[y][x].getValue()===player.mark){
-      winArr[y-1].push(x-1); winArr[y].push(x); winArr[y+1].push(x+1);
-    }else if(gameBoard[y-2] && gameBoard[y-2][x-2] && gameBoard[y-1] && gameBoard[y-1][x-1] &&
-    gameBoard[y-2][x-2].getValue()===player.mark && gameBoard[y-1][x-1].getValue()===player.mark &&
-    gameBoard[y][x].getValue()===player.mark){
-      winArr[y-2].push(x-2); winArr[y-1].push(x-1); winArr[y].push(x);
-    }else if(gameBoard[y-1] && gameBoard[y-1][x+1] && gameBoard[y-2] && gameBoard[y-2][x+2] &&
-    gameBoard[y-1][x+1].getValue()===player.mark && gameBoard[y-2][x+2].getValue()===player.mark &&
-    gameBoard[y][x].getValue()===player.mark){
-      winArr[y].push(x); winArr[y-1].push(x+1); winArr[y-2].push(x+2);
-    }else if(gameBoard[y+1] && gameBoard[y+1][x-1] && gameBoard[y-1] && gameBoard[y-1][x+1] &&
-    gameBoard[y+1][x-1].getValue()===player.mark && gameBoard[y-1][x+1].getValue()===player.mark &&
-    gameBoard[y][x].getValue()===player.mark){
-      winArr[y+1].push(x-1); winArr[y].push(x); winArr[y-1].push(x+1);
-    }else if(gameBoard[y-2] && gameBoard[y-2][x+2] && gameBoard[y-1] && gameBoard[y-1][x+1] &&
-    gameBoard[y-2][x+2].getValue()===player.mark && gameBoard[y-1][x+1].getValue()===player.mark &&
-    gameBoard[y][x].getValue()===player.mark){
-      winArr[y-2].push(x+2); winArr[y-1].push(x+1); winArr[y].push(x);
-    }else{
-      gameBoard.forEach((row, indx, arr) => {
-        if(arr[indx-1] && arr[indx+1] && arr[indx-1][x].getValue()===player.mark &&
-        arr[indx][x].getValue()===player.mark && arr[indx+1][x].getValue()===player.mark){
-          winArr[indx-1].push(x); winArr[indx].push(x); winArr[indx+1].push(x);
-        };
-      });
-      gameBoard[y].forEach((cell, indx, arr) => {
-        if(arr[indx-1] && arr[indx+1] && arr[indx-1].getValue()===player.mark &&
-        arr[indx].getValue()===player.mark && arr[indx+1].getValue()===player.mark){
-          winArr[y].push(indx-1, indx, indx+1);
-        };
-      });
-    };
-    if(winArr[y].length > 0) winCondition += 1;
+    gameBoard.forEach((row, indexY, arr) => {
+      if(arr[indexY-1] && arr[indexY+1] && arr[indexY-1][x].getValue()===player.mark &&
+      row[x].getValue()===player.mark && arr[indexY+1][x].getValue()===player.mark){
+        winArr[indexY-1].push(x); winArr[indexY].push(x); winArr[indexY+1].push(x);
+      }else{
+        row.forEach((cell, index, arr)=>{
+          if(arr[index-1] && arr[index+1] && arr[index-1].getValue()===player.mark &&
+          cell.getValue()===player.mark && arr[index+1].getValue()===player.mark){
+            winArr[y].push(index-1, index, index+1);
+          }else if(gameBoard[indexY+2] && gameBoard[indexY+2][index+2] && gameBoard[indexY+2][index+2].getValue()===player.mark &&
+          gameBoard[indexY+1][index+1].getValue()===player.mark && cell.getValue()===player.mark){
+            winArr[indexY+2].push(index+2); winArr[indexY+1].push(index+1); winArr[indexY].push(index);
+          }else if(gameBoard[indexY+2] && gameBoard[indexY+2][index-2] && gameBoard[indexY+2][index-2].getValue()===player.mark &&
+          gameBoard[indexY+1][index-1].getValue()===player.mark && cell.getValue()===player.mark){
+            winArr[indexY+2].push(index-2); winArr[indexY+1].push(index-1); winArr[indexY].push(index);
+          };
+        });
+      };
+    });
+  if(winArr[y].length > 0) winCondition += 1;
   return { winArr, winCondition };
 }
 
