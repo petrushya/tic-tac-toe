@@ -106,7 +106,7 @@ function gamePlay(){
       message.innerHTML = `Next mark<br><span class="mark">${activePlayer().mark}</span>`;
     }else{
       message.textContent = 'SCORE';
-      round.textContent = 'DROW';
+      round.textContent = 'Round DROW';
       nextRound.style.visibility = 'visible';
       while(board.length > 0) board.shift();
       boardDiv.removeEventListener("click", clickHandlerBoard);
