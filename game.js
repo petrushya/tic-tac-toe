@@ -118,7 +118,7 @@ function gamePlay(){
       message.textContent = 'SCORE';
       while(board.length > 0) board.shift();
       boardDiv.removeEventListener("click", clickHandlerBoard);
-    }else if(gamePlayers.runCounter().getValue() < 8){
+    }else if(gamePlayers.runCounter().getValue() < 9){
       message.innerHTML = `Next mark<br><span class="mark">${activePlayer().mark}</span>`;
     };
     if(gameCounter.getValue() === +maxCount.value){
