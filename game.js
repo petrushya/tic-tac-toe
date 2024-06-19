@@ -170,18 +170,34 @@ function findWinArr(y, x, gameBoard, player){
     gameBoard.forEach((row, indexY, arr) => {
       if(arr[indexY+2] && arr[indexY+2][x].getValue()===player.mark &&
       arr[indexY+1][x].getValue()===player.mark && arr[indexY][x].getValue()===player.mark){
-        winArr[indexY].push(x); winArr[indexY+1].push(x); winArr[indexY+2].push(x);
+        if(winArr[indexY].length === 0){
+          winArr[indexY].push(x);
+          winArr[indexY+1].push(x);
+          winArr[indexY+2].push(x);
+        };
       }else{
         row.forEach((cell, index, arr)=>{
           if(arr[index+2] && arr[index+2].getValue()===player.mark &&
           arr[index+1].getValue()===player.mark && arr[index].getValue()===player.mark){
-            winArr[y].push(index, index+1, index+2);
-          }else if(gameBoard[indexY+2] && gameBoard[indexY+2][index+2] && gameBoard[indexY+2][index+2].getValue()===player.mark &&
-          gameBoard[indexY+1][index+1].getValue()===player.mark && cell.getValue()===player.mark){
-            winArr[indexY+2].push(index+2); winArr[indexY+1].push(index+1); winArr[indexY].push(index);
-          }else if(gameBoard[indexY+2] && gameBoard[indexY+2][index-2] && gameBoard[indexY+2][index-2].getValue()===player.mark &&
-          gameBoard[indexY+1][index-1].getValue()===player.mark && cell.getValue()===player.mark){
-            winArr[indexY+2].push(index-2); winArr[indexY+1].push(index-1); winArr[indexY].push(index);
+            if(winArr[indexY].length === 0) winArr[y].push(index, index+1, index+2);
+          }else if(gameBoard[indexY+2] && gameBoard[indexY+2][index+2] &&
+          gameBoard[indexY+2][index+2].getValue()===player.mark &&
+          gameBoard[indexY+1][index+1].getValue()===player.mark &&
+          gameBoard[indexY][index].getValue()===player.mark){
+            if(winArr[indexY].length === 0){
+              winArr[indexY+2].push(index+2);
+              winArr[indexY+1].push(index+1);
+              winArr[indexY].push(index);
+            };
+          }else if(gameBoard[indexY+2] && gameBoard[indexY+2][index-2] &&
+          gameBoard[indexY+2][index-2].getValue()===player.mark &&
+          gameBoard[indexY+1][index-1].getValue()===player.mark &&
+          gameBoard[indexY][index].getValue()===player.mark){
+            if(winArr[indexY].length === 0){
+              winArr[indexY+2].push(index-2);
+              winArr[indexY+1].push(index-1);
+              winArr[indexY].push(index);
+            };
           };
         });
       };
