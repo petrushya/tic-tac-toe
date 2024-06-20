@@ -12,6 +12,13 @@ const changeName = document.querySelector('.changeName');
 const round = document.querySelector('.round');
 const gameInfo = document.querySelector('.gameInfo');
 const nextRound = document.querySelector('.nextRound');
+const playerOneScore = document.querySelector('.player1 .score');
+const playerTwoScore = document.querySelector('.player2 .score');
+const message = document.querySelector('.message');
+const boardDiv = document.querySelector('.board');
+
+const gameCounter = makeCounter();
+let gamePlayers = players(playerOneName.textContent, playerTwoName.textContent);
 
 changeName.addEventListener("click", () => {
   namedDialog.showModal();
@@ -20,6 +27,7 @@ confirmNames.addEventListener("click", (event) => {
   event.preventDefault();
   if(playerOneNamed.value) playerOneName.textContent = playerOneNamed.value.toUpperCase();
   if(playerTwoNamed.value) playerTwoName.textContent = playerTwoNamed.value.toUpperCase();
+  gamePlayers = players(playerOneName.textContent, playerTwoName.textContent);
   playerOneNamed.value = "";
   playerTwoNamed.value = "";
   namedDialog.close();
@@ -34,31 +42,21 @@ namedDialog.addEventListener("close", () => {
 output.textContent = maxCount.value;
 maxCount.addEventListener('input', () => {output.textContent = maxCount.value;});
 
-const runCounter = makeCounter();
-const oneCounter = makeCounter();
-const twoCounter = makeCounter();
-const gameCounter = makeCounter();
-
 playGame.addEventListener('click', () => {
   gameInfo.style.display = 'none';
   round.style.visibility = 'visible';
-  [runCounter, oneCounter, twoCounter, gameCounter].forEach(item => item.reset());
+  [gamePlayers.runCounter(), gamePlayers.getPlayers()[0].counter,
+  gamePlayers.getPlayers()[1].counter, gameCounter].forEach(item => item.reset());
   gamePlay();
 });
 nextRound.addEventListener('click', () => {
-  runCounter.reset();
+  gamePlayers.runCounter().reset();
   nextRound.style.visibility = 'hidden';
   gamePlay();
 });
 
 function gamePlay(){
-  const playerOneScore = document.querySelector('.player1 .score');
-  const playerTwoScore = document.querySelector('.player2 .score');
-  const message = document.querySelector('.message');
-  const boardDiv = document.querySelector('.board');
-
   const game = playController();
-  const activePlayer = () => gamePlayers().activePlayer();
   while(boardDiv.firstChild) boardDiv.removeChild(boardDiv.firstChild);
   const board = game.board;
   board.forEach((row, indexY) => {
@@ -76,8 +74,8 @@ function gamePlay(){
 
   gameCounter.getValue() + 1 === +maxCount.value ? round.textContent = 'Last Round' :
     round.textContent = `Round ${gameCounter.getValue() + 1} of ${maxCount.value}`;
-  playerOneScore.textContent = gamePlayers().getPlayers()[0].counter.getValue();
-  playerTwoScore.textContent = gamePlayers().getPlayers()[1].counter.getValue();
+  playerOneScore.textContent = gamePlayers.getPlayers()[0].counter.getValue();
+  playerTwoScore.textContent = gamePlayers.getPlayers()[1].counter.getValue();
   message.innerHTML = 'First mark<br><span class="mark">&#x1F5D9;</span>';
 
   boardDiv.addEventListener("click", clickHandlerBoard);
@@ -90,8 +88,8 @@ function gamePlay(){
     const x = +indexX;
     game.getMarkBoard(y, x);
     document.querySelector(`[data-y="${y}"][data-x="${x}"]`).textContent = board[y][x].getValue();
-    if(game.getWinArr(y, x)[y].length > 0 || runCounter.getValue() === 9){
-      if(runCounter.getValue() === 9){
+    if(game.getWinArr(y, x)[y].length > 0 || gamePlayers.runCounter().getValue() === 9){
+      if(gamePlayers.runCounter().getValue() === 9){
         round.textContent = 'Round DROW';
       }else{
         game.getWinArr(y, x).forEach((row, indexY) => {
@@ -99,16 +97,16 @@ function gamePlay(){
             row.forEach(cell => boardDiv.querySelector(`[data-y="${indexY}"][data-x="${cell}"]`).classList.add('color'));
           };
         });
-        round.textContent = `${activePlayer().name} won the round!`;
+        round.textContent = `${gamePlayers.activePlayer().name} won the round!`;
       };
       nextRound.style.visibility = 'visible';
-      playerOneScore.textContent = gamePlayers().getPlayers()[0].counter.getValue();
-      playerTwoScore.textContent = gamePlayers().getPlayers()[1].counter.getValue();
+      playerOneScore.textContent = gamePlayers.getPlayers()[0].counter.getValue();
+      playerTwoScore.textContent = gamePlayers.getPlayers()[1].counter.getValue();
       message.textContent = 'SCORE';
       while(board.length > 0) board.shift();
       boardDiv.removeEventListener("click", clickHandlerBoard);
-    }else if(runCounter.getValue() < 9){
-      message.innerHTML = `Next mark<br><span class="mark">${activePlayer().mark}</span>`;
+    }else if(gamePlayers.runCounter().getValue() < 9){
+      message.innerHTML = `Next mark<br><span class="mark">${gamePlayers.activePlayer().mark}</span>`;
     };
     if(gameCounter.getValue() === +maxCount.value){
       nextRound.style.visibility = 'hidden';
@@ -116,12 +114,13 @@ function gamePlay(){
       setTimeout(() => {
         gameInfo.style.display = 'flex';
         const para = gameInfo.querySelector('p');
-        (gamePlayers().getPlayers()[0].counter.getValue() > gamePlayers().getPlayers()[1].counter.getValue()) ?
+        (gamePlayers.getPlayers()[0].counter.getValue() > gamePlayers.getPlayers()[1].counter.getValue()) ?
           para.innerHTML = `GAME OVER,<br>WINNER<br>${playerOneName.textContent}`:
           para.innerHTML = `GAME OVER,<br>WINNER<br>${playerTwoName.textContent}`;
-        if(gamePlayers().getPlayers()[0].counter.getValue() === gamePlayers().getPlayers()[1].counter.getValue())
+        if(gamePlayers.getPlayers()[0].counter.getValue() === gamePlayers.getPlayers()[1].counter.getValue())
           para.innerHTML = 'GAME OVER<br>IN A DROW';
         while(boardDiv.firstChild) boardDiv.removeChild(boardDiv.firstChild);
+        while(board.length > 0) board.shift();
       }, 1000);
     };
   }
@@ -129,30 +128,32 @@ function gamePlay(){
 
 function playController(){
   const board = createBoard().board;
-  const getWinArr = (y, x) => findWinArr(y, x, board, gamePlayers().activePlayer()).winArr;
+  const getWinArr = (y, x) => findWinArr(y, x, board, gamePlayers.activePlayer()).winArr;
   const getMarkBoard = (y, x) => {
     if(board[y][x].getValue() !== ''){ return };
-    board[y][x].setValue(gamePlayers().activePlayer().mark);
+    board[y][x].setValue(gamePlayers.activePlayer().mark);
     if(getWinArr(y, x)[y].length > 0){
-      gamePlayers().activePlayer().counter.increment();
+      gamePlayers.activePlayer().counter.increment();
       gameCounter.increment();
-    }else if(runCounter.getValue() < 9){
-      runCounter.increment();
-      if(runCounter.getValue() === 9) gameCounter.increment();
+    }else if(gamePlayers.runCounter().getValue() < 9){
+      gamePlayers.runCounter().increment();
+      if(gamePlayers.runCounter().getValue() === 9) gameCounter.increment();
     };
   };
   return{ getMarkBoard, board, getWinArr };
 }
 
-function gamePlayers(){
+function players(oneName, twoName){
   const players = [
-    {name:playerOneName.textContent,mark:'🗙',counter:oneCounter},
-    {name:playerTwoName.textContent,mark:'🞇',counter:twoCounter}
+    {name:oneName,mark:'🗙',counter:makeCounter()},
+    {name:twoName,mark:'🞇',counter:makeCounter()}
   ];
-  const activePlayer = () => players[runCounter.getValue() % 2];
+  const stepCounter = makeCounter();
+  const activePlayer = () => players[stepCounter.getValue() % 2];
   return{
     activePlayer,
-    getPlayers(){return players}
+    runCounter () {return stepCounter},
+    getPlayers () {return players}
   };
 }
 
@@ -186,18 +187,18 @@ function findWinArr(y, x, gameBoard, player){
           gameBoard[indexY+1][index+1].getValue()===player.mark &&
           gameBoard[indexY][index].getValue()===player.mark){
             if(winArr[indexY].length === 0){
-              winArr[indexY+2].push(index+2);
-              winArr[indexY+1].push(index+1);
               winArr[indexY].push(index);
+              winArr[indexY+1].push(index+1);
+              winArr[indexY+2].push(index+2);
             };
           }else if(gameBoard[indexY+2] && gameBoard[indexY+2][index-2] &&
           gameBoard[indexY+2][index-2].getValue()===player.mark &&
           gameBoard[indexY+1][index-1].getValue()===player.mark &&
           gameBoard[indexY][index].getValue()===player.mark){
             if(winArr[indexY].length === 0){
-              winArr[indexY+2].push(index-2);
-              winArr[indexY+1].push(index-1);
               winArr[indexY].push(index);
+              winArr[indexY+1].push(index-1);
+              winArr[indexY+2].push(index-2);
             };
           };
         });
